@@ -5,6 +5,7 @@ namespace psuedoGAME
 {
     class Program
     {
+        static List<Game> accountList;
         static string tempUsername = string.Empty;
         static string tempPassword = string.Empty;
         static bool shouldExit = false;

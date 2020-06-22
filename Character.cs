@@ -1,0 +1,7 @@
+namespace psuedoGAME
+{
+    class Character
+    {
+        
+    }
+}
