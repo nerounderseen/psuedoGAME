@@ -1,0 +1,13 @@
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME.deps.json
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME.runtimeconfig.json
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME.runtimeconfig.dev.json
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME.dll
+/home/underseen/psuedoGAME/bin/Debug/netcoreapp3.1/psuedoGAME.pdb
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.csprojAssemblyReference.cache
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.AssemblyInfoInputs.cache
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.AssemblyInfo.cs
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.csproj.CoreCompileInputs.cache
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.dll
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.pdb
+/home/underseen/psuedoGAME/obj/Debug/netcoreapp3.1/psuedoGAME.genruntimeconfig.cache
