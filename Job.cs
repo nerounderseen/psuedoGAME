@@ -1,10 +1,17 @@
+using System;
 namespace psuedoGAME
 {
     class Job
     {
-        public bool JobSelect(string jobEntry)
+        private int _jobSelectIndex = 0;
+        public string[] jobList = { "Swordsman", "Mage", "Thief", "Acolyte", "Archer", "Merchant" };
+        public string GetJob()
         {
-            if (jobEntry)
+            foreach (var job in jobList)
+            {
+                Console.Write($"{job}");
+            }
+            return null;
         }
     }
 }

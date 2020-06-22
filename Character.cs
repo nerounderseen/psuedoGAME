@@ -5,6 +5,7 @@ namespace psuedoGAME
         public int charCounter;
         public string name {get; set;}
         public string job {get; set;}
+        public int freePoints = 50;
         public int str;
         public int agi;
         public int vit;

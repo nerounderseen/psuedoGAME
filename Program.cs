@@ -13,6 +13,7 @@ namespace psuedoGAME
         static bool shouldExit = false;
         static Account account;
         static Character character;
+        static Job job;
         static void Main(string[] args)
         {
             while (!shouldExit)
@@ -40,21 +41,21 @@ namespace psuedoGAME
                                 while (!shouldLogout)
                                 {
                                     Console.Clear();
-                                    Console.WriteLine("[LOGIN]\n\n");
+                                    Console.WriteLine("Welcome to psuedoRAGNAROK\n\n");
                                     Console.WriteLine("Select Option");
                                     switch (ShowMenu("[Create Character]", "[Select Character]", "[Exit]"))
                                     {
                                         case '1':
                                             Console.Clear();
-                                            Console.WriteLine("[CREATE CHARACTER]\n");
-                                            Console.Write("In-game Name: ");
+                                            Console.WriteLine("Welcome to psuedoRAGNAROK\n\n");
+                                            Console.Write("Character Name: ");
                                             charName = Console.ReadLine().Trim();
                                             Console.Clear();
-                                            Console.WriteLine("[CREATE CHARACTER]\n");
-                                            Console.WriteLine("Choose Character Job");
-                                            if ()
+                                            Console.WriteLine("Welcome to psuedoRAGNAROK\n\n");
+                                            Console.Write("Select a Job");
+                                            foreach (var job in job.jobList)
                                             {
-
+                                                Console.Write($"{job}");
                                             }
                                             break;
                                         case '2':
