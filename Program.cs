@@ -5,7 +5,7 @@ namespace psuedoGAME
 {
     class Program
     {
-        static List<Game> accountList;
+        static List<Account> accountList = new List<Account>();
         static string tempUsername = string.Empty;
         static string tempPassword = string.Empty;
         static bool shouldExit = false;
@@ -20,16 +20,29 @@ namespace psuedoGAME
                 switch (ShowMenu("[Register]", "[Login]", "[Exit]"))
                 {
                     case '1':
-                        Console.Clear();
-                        Console.WriteLine("[REGISTRATION]\n");
-                        Console.Write("Username: ");
-                        tempUsername = Console.ReadLine().ToLower().Trim();
-                        Console.Write("Password: ");
-                        tempPassword = Console.ReadLine().ToLower().Trim();
-                        Console.Clear();
-                        Console.WriteLine("[REGISTRATION]\n");
-                        Console.Write("Successfully Registered\n\nReturning to Main Screen");
-                        Console.ReadKey();
+                        {
+                            Console.Clear();
+                            Console.WriteLine("[REGISTRATION]\n");
+                            Console.Write("Username: ");
+                            tempUsername = Console.ReadLine().ToLower().Trim();
+                            Console.Write("Password: ");
+                            tempPassword = Console.ReadLine().ToLower().Trim();
+                            if (accountList.Exists(x => x.username != null) && accountList.Exists(x => x.username == tempUsername))
+                            {
+                                Console.Clear();
+                                Console.WriteLine("[REGISTRATION]\n");
+                                Console.Write("Username is already taken...\nReturning to Main Screen...");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.Clear();
+                                accountList.Add(new Account { username = tempUsername, password = tempPassword });
+                                Console.WriteLine("[REGISTRATION]\n");
+                                Console.Write("Successfully Registered\n\nReturning to Main Screen...");
+                                Console.ReadKey();
+                            }
+                        }
                         break;
                     case '2':
                         while (!shouldLogout)
