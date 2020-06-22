@@ -1,7 +1,7 @@
 namespace psuedoGAME
 {
-    class Game
+    class Inventory
     {
-
+        
     }
 }

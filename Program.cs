@@ -6,10 +6,13 @@ namespace psuedoGAME
     class Program
     {
         static List<Account> accountList = new List<Account>();
+        static string charName = string.Empty;
+        static string charJob = string.Empty;
         static string tempUsername = string.Empty;
         static string tempPassword = string.Empty;
         static bool shouldExit = false;
-        static bool shouldLogout = false;
+        static Account account;
+        static Character character;
         static void Main(string[] args)
         {
             while (!shouldExit)
@@ -20,52 +23,54 @@ namespace psuedoGAME
                 switch (ShowMenu("[Register]", "[Login]", "[Exit]"))
                 {
                     case '1':
+                        AccountRegister();
+                        break;
+                    case '2':
                         {
                             Console.Clear();
-                            Console.WriteLine("[REGISTRATION]\n");
+                            Console.WriteLine("[LOGIN]\n");
                             Console.Write("Username: ");
                             tempUsername = Console.ReadLine().ToLower().Trim();
                             Console.Write("Password: ");
                             tempPassword = Console.ReadLine().ToLower().Trim();
-                            if (accountList.Exists(x => x.username != null) && accountList.Exists(x => x.username == tempUsername))
+                            account = GetAccount(tempUsername, tempPassword);
+                            if (account != null)
                             {
-                                Console.Clear();
-                                Console.WriteLine("[REGISTRATION]\n");
-                                Console.Write("Username is already taken...\nReturning to Main Screen...");
-                                Console.ReadKey();
+                                bool shouldLogout = false;
+                                while (!shouldLogout)
+                                {
+                                    Console.Clear();
+                                    Console.WriteLine("[LOGIN]\n\n");
+                                    Console.WriteLine("Select Option");
+                                    switch (ShowMenu("[Create Character]", "[Select Character]", "[Exit]"))
+                                    {
+                                        case '1':
+                                            Console.Clear();
+                                            Console.WriteLine("[CREATE CHARACTER]\n");
+                                            Console.Write("In-game Name: ");
+                                            charName = Console.ReadLine().Trim();
+                                            Console.Clear();
+                                            Console.WriteLine("[CREATE CHARACTER]\n");
+                                            Console.WriteLine("Choose Character Job");
+                                            if ()
+                                            {
+
+                                            }
+                                            break;
+                                        case '2':
+                                            break;
+                                        case '3':
+                                            shouldLogout = true;
+                                            break;
+                                    }
+                                }
                             }
                             else
                             {
                                 Console.Clear();
-                                accountList.Add(new Account { username = tempUsername, password = tempPassword });
-                                Console.WriteLine("[REGISTRATION]\n");
-                                Console.Write("Successfully Registered\n\nReturning to Main Screen...");
+                                Console.WriteLine("[LOGIN]\n");
+                                Console.WriteLine("Incorrect Username/Passowrd...");
                                 Console.ReadKey();
-                            }
-                        }
-                        break;
-                    case '2':
-                        while (!shouldLogout)
-                        {
-                            Console.Clear();
-                            Console.WriteLine("[LOGIN]\n");
-                            Console.Write("Username: ");
-                            tempUsername = Console.ReadLine().ToLower().Trim();
-                            Console.Write("Password: ");
-                            tempPassword = Console.ReadLine().ToLower().Trim();
-                            Console.Clear();
-                            Console.WriteLine("[LOGIN]\n");
-                            Console.WriteLine("Entering World\n");
-                            Console.WriteLine("Select Option");
-                            switch (ShowMenu("[Create Character]", "[Select Character]", "[Exit]"))
-                            {
-                                case '1':
-                                    break;
-                                case '2':
-                                    break;
-                                case '3':
-                                    shouldLogout = true;
-                                    break;
                             }
                         }
                         break;
@@ -88,6 +93,39 @@ namespace psuedoGAME
             ConsoleKeyInfo key = Console.ReadKey();
             Console.WriteLine();
             return key.KeyChar;
+        }
+        static Account GetAccount(string uName, string pWord)
+        {
+            foreach (Account account in accountList)
+            {
+                if (account.username == uName && account.password == pWord)
+                    return account;
+            }
+            return null;
+        }
+        static void AccountRegister()
+        {
+            Console.Clear();
+            Console.WriteLine("[REGISTRATION]\n");
+            Console.Write("Username: ");
+            tempUsername = Console.ReadLine().ToLower().Trim();
+            Console.Write("Password: ");
+            tempPassword = Console.ReadLine().ToLower().Trim();
+            if (accountList.Exists(x => x.username != null) && accountList.Exists(x => x.username == tempUsername))
+            {
+                Console.Clear();
+                Console.WriteLine("[REGISTRATION]\n");
+                Console.Write("Username is already taken...\nReturning to Main Screen...");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.Clear();
+                accountList.Add(new Account { username = tempUsername, password = tempPassword });
+                Console.WriteLine("[REGISTRATION]\n");
+                Console.Write("Successfully Registered\n\nReturning to Main Screen...");
+                Console.ReadKey();
+            }
         }
     }
 }
