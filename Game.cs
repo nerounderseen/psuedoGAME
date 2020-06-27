@@ -1,7 +1,0 @@
-namespace psuedoGAME
-{
-    class Game
-    {
-
-    }
-}
