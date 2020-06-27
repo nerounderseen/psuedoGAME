@@ -5,20 +5,34 @@ namespace psuedoGAME
         private int _totalChar;
         public string username { get; set; }
         public string password { get; set; }
-        private Character[] newCharacter { get; set; }
+        private Character[] charNew { get; set; }
         public Account()
         {
-            newCharacter = new Character[3];
+            charNew = new Character[3];
             _totalChar = 0;
         }
-        public void CharacterCreate(string cName, string cJob)
+
+        public void CharacterCreate(string cName, char cGender)
         {
-            newCharacter[_totalChar] = new Character
+            charNew[_totalChar] = new Character
             {
-                charCounter = _totalChar,
+                charCount = _totalChar,
                 name = cName,
-                job = cJob,
+                gender = cGender,
+                baselevel = 1,
+                joblevel = 1
             };
+            _totalChar++;
+        }
+
+        public Character[] ShowChar()
+        {
+            Character[] CopiedCharArray = new Character[_totalChar];
+            for (int i = 0; i < _totalChar; i++)
+            {
+                CopiedCharArray[i] = charNew[i];
+            }
+            return CopiedCharArray;
         }
     }
 }

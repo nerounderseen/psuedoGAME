@@ -2,6 +2,5 @@ namespace psuedoGAME
 {
     class Inventory
     {
-        
     }
 }
