@@ -63,7 +63,7 @@ namespace psuedoGAME
                     Console.Clear();
                     Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
                     Console.WriteLine("Select Option");
-                    switch (ShowMenu("[Create Character]", "[Select Character]", "[Exit]"))
+                    switch (ShowMenu("[Create Character]", "[Select Character]", "[Delete Character]", "[Exit]"))
                     {
                         case '1':
                             CreateChar();
@@ -120,6 +120,7 @@ namespace psuedoGAME
                 Console.ReadLine();
             }
         }
+
         static void CharDisplay()
         {
             bool shouldChangeChar = false;
@@ -133,12 +134,7 @@ namespace psuedoGAME
                 switch (ShowMenu("[Add Stats]", "[Access Inventory]", "[Mail Item]", "[Kafra Storage]", "[Change Character]"))
                 {
                     case '1':
-                        Console.Clear();
-                        Console.WriteLine("psuedoRAGNAROK.offline\n");
-                        Console.WriteLine($"IGN: {character.name}\t\t Stat Points: {character.freePoints}");
-                        Console.WriteLine($"\tSTR: {character.str}\t\tAGI: {character.agi}\t\tVIT: {character.vit}");
-                        Console.WriteLine($"\tINT: {character.intel}\t\tDEX: {character.dex}\t\tLUK: {character.luk}");
-                        Console.ReadLine();
+                        AddStats();
                         break;
                     case '2':
                         break;
@@ -148,6 +144,43 @@ namespace psuedoGAME
                         break;
                     case '5':
                         shouldChangeChar = true;
+                        break;
+                }
+            }
+        }
+
+        static void AddStats()
+        {
+            bool shouldReturn = false;
+            while (!shouldReturn)
+            {
+                Console.Clear();
+                Console.WriteLine("psuedoRAGNAROK.offline\n");
+                Console.WriteLine($"IGN: {character.name}\t\tStat Points: {character.freePoints}");
+                Console.WriteLine($"\tSTR: {character.str}\t\tAGI: {character.agi}\t\tVIT: {character.vit}");
+                Console.WriteLine($"\tINT: {character.intel}\t\tDEX: {character.dex}\t\tLUK: {character.luk}\n");
+                switch (ShowMenu("[+STR]", "[+AGI]", "[+VIT]", "[+INT]", "[+DEX]", "[+LUK]", "[Character Page]"))
+                {
+                    case '1':
+                        character.AddSTR();
+                        break;
+                    case '2':
+                        character.AddAGI();
+                        break;
+                    case '3':
+                        character.AddVIT();
+                        break;
+                    case '4':
+                        character.AddINT();
+                        break;
+                    case '5':
+                        character.AddDEX();
+                        break;
+                    case '6':
+                        character.AddLUK();
+                        break;
+                    case '7':
+                        shouldReturn = true;
                         break;
                 }
             }
@@ -176,6 +209,7 @@ namespace psuedoGAME
             }
             return null;
         }
+
         static Character GetCharacter(string ign)
         {
             foreach (Character character in account.ShowChar())
@@ -185,6 +219,5 @@ namespace psuedoGAME
             }
             return null;
         }
-
     }
 }
