@@ -2,19 +2,21 @@ namespace psuedoGAME
 {
     class Account
     {
+        public string username;
+        public string password;
+        public int securePIN;
+        private Character[] _charNew { get; set; }
         private int _totalChar;
-        public string username { get; set; }
-        public string password { get; set; }
-        private Character[] charNew { get; set; }
+
         public Account()
         {
-            charNew = new Character[3];
+            _charNew = new Character[3];
             _totalChar = 0;
         }
 
         public void CharacterCreate(string cName, char cGender)
         {
-            charNew[_totalChar] = new Character
+            _charNew[_totalChar] = new Character
             {
                 charCount = _totalChar,
                 name = cName,
@@ -24,15 +26,23 @@ namespace psuedoGAME
             };
             _totalChar++;
         }
-
         public Character[] ShowChar()
         {
             Character[] CopiedCharArray = new Character[_totalChar];
             for (int i = 0; i < _totalChar; i++)
             {
-                CopiedCharArray[i] = charNew[i];
+                CopiedCharArray[i] = _charNew[i];
             }
             return CopiedCharArray;
+        }
+        public Character GetCharacter(string ign)
+        {
+            foreach (Character character in _charNew)
+            {
+                if (character.name == ign)
+                    return character;
+            }
+            return null;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace psuedoGAME
         public int intel = 1;
         public int dex = 1;
         public int luk = 1;
+        private Item _item;
         private List<Inventory> charInventory { get; set; }
 
         public void AddSTR()
@@ -100,6 +101,9 @@ namespace psuedoGAME
         public Character()
         {
             charInventory = new List<Inventory>();
+            charInventory.Add(new Inventory{id = 501, name = "Red Potion", slot = 0, quantity = 10});
+            charInventory.Add(new Inventory{id = 1203, name = "Knife", slot = 0, quantity = 1});
+            charInventory.Add(new Inventory{id = 2305, name = "Adventurer's Suit", slot = 0, quantity = 1});
         }
         public List<Inventory> ShowInventory()
         {

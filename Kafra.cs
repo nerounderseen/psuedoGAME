@@ -2,5 +2,6 @@ namespace psuedoGAME
 {
     class Kafra
     {
+
     }
 }

@@ -2,10 +2,9 @@ namespace psuedoGAME
 {
     class Inventory
     {
-        public int itemID { get; set; }
-        public string itemName { get; set; }
-        public int itemQuantity { get; set; }
-        public string itemDecript { get; set; }
-        public bool tradable;
+        public int id { get; set; }
+        public string name { get; set; }
+        public int slot { get; set; }
+        public int quantity { get; set; }
     }
 }
