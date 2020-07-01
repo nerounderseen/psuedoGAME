@@ -6,11 +6,22 @@ namespace psuedoGAME
     {
         static string username;
         static string tempIGN;
+        static string transferIGN;
         static string password;
+        static string nPassword;
+        static string itemName;
         static int pin;
+        static int itemID;
+        static int quantity;
         static Game newAccount = new Game();
+        static Kafra kStoredItem;
+        static Account xAccount = new Account();
         static Account account;
         static Character character;
+        static Character transferChar = new Character();
+        static Inventory inventoryItem;
+        static Item item = new Item();
+        static Item rItem;
 
         static void Main(string[] args)
         {
@@ -19,7 +30,7 @@ namespace psuedoGAME
             {
                 Console.Clear();
                 Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
-                switch (ShowMenu("[Register]", "[Login]", "[Forgot Password]", "[Exit]"))
+                switch (ShowMenu("[Register]", "[Login]", "[Change Password]", "[Forgot Password]", "[Exit]"))
                 {
                     case '1':
                         RegisterAccnt();
@@ -28,15 +39,18 @@ namespace psuedoGAME
                         Login();
                         break;
                     case '3':
-                        ForgotPassword();
+                        ChangPassword();
                         break;
                     case '4':
+                        ForgotPassword();
+                        break;
+                    case '5':
                         shouldTerminate = true;
                         break;
                 }
             }
-
         }
+
         static char ShowMenu(params string[] items)
         {
             string menuString = "";
@@ -54,20 +68,50 @@ namespace psuedoGAME
         static void RegisterAccnt()
         {
             Console.Clear();
-            Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
+            Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n\n");
             Console.Write("Enter Username: ");
             username = Console.ReadLine();
-            Console.Write("Enter Password: ");
-            password = Console.ReadLine();
-            Console.Write("Enter Secure PIN: ");
-            int.TryParse(Console.ReadLine(), out pin);
-            newAccount.Registration(username, password, pin);
+            account = newAccount.IsAccountExists(username);
+            if (account == null)
+            {
+                Console.Write("Enter Password: ");
+                password = Console.ReadLine();
+                Console.Write("Enter Secure PIN: ");
+                if (int.TryParse(Console.ReadLine(), out pin))
+                {
+                    if ((!string.IsNullOrEmpty(username) || !string.IsNullOrWhiteSpace(username)) && (!string.IsNullOrWhiteSpace(username) || !string.IsNullOrWhiteSpace(username)))
+                    {
+                        newAccount.Registration(username, password, pin);
+                        Console.Clear();
+                        Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n\n");
+                        Console.Write("Account Successfully Registered...\nProceed to Login...\t");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.Write("\nUsername/Password can't be Empty...");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nSecured Pin is Invalid...");
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
+                Console.Write("Username Already Exists");
+                Console.ReadKey();
+            }
         }
 
         static void Login()
         {
             Console.Clear();
-            Console.WriteLine("LOGIN - psuedoRAGNAROK.offline\n");
+            Console.WriteLine("LOGIN - psuedoRAGNAROK.offline\n\n");
             Console.Write("Username: ");
             username = Console.ReadLine();
             Console.Write("Password: ");
@@ -90,6 +134,7 @@ namespace psuedoGAME
                             SelectCharacter();
                             break;
                         case '3':
+                            DeleteCharacter();
                             break;
                         case '4':
                             shouldLogout = true;
@@ -97,38 +142,123 @@ namespace psuedoGAME
                     }
                 }
             }
+            else
+            {
+                Console.Write("\nIncorrect Username/Password...");
+                Console.ReadKey();
+            }
+        }
+
+        static void ChangPassword()
+        {
+            Console.Clear();
+            Console.WriteLine("CHANGE PASSWORD - psuedoRAGNAROK.offline\n\n");
+            Console.Write("Username: ");
+            username = Console.ReadLine();
+            Console.Write("Old Password: ");
+            password = Console.ReadLine();
+            newAccount.PasswordCheck(password);
+            if (newAccount != null)
+            {
+                Console.Write("New Password: ");
+                nPassword = Console.ReadLine();
+                account = newAccount.ChangePassword(username, password, nPassword);
+                Console.Write("\n\nPassword Changed Successfully...");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.Write("\nEntered Password is Incorrect...\nReturning to Main Screen...");
+                Console.ReadKey();
+            }
         }
 
         static void ForgotPassword()
         {
             Console.Clear();
-            Console.WriteLine("FORGOT PASSWORD - psuedoRAGNAROK.offline\n");
+            Console.WriteLine("FORGOT PASSWORD - psuedoRAGNAROK.offline\n\n");
             Console.Write("Username: ");
             username = Console.ReadLine();
-            Console.Write("Secure PIN: ");
-            int.TryParse(Console.ReadLine(), out pin);
-            account = newAccount.ForgotPassword(username, pin);
-            Console.WriteLine($"\nAccount Username: {account.username}\nAccount Password: {account.password}");
-            Console.ReadLine();
+            Console.Write("Secured PIN: ");
+            if (int.TryParse(Console.ReadLine(), out pin))
+            {
+                account = newAccount.SecuredPINCheck(pin);
+                if (account != null)
+                {
+                    account = newAccount.ForgotPassword(username, pin);
+                    Console.Write($"\nAccount Username: {account.username}\nAccount Password: {account.password}\t");
+                    Console.ReadLine();
+                }
+                else
+                {
+                    Console.Write("\nAccount/Secured Pin is Invalid...");
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                Console.Write("\nSecured PIN is Invalid...");
+                Console.ReadLine();
+            }
         }
 
         static void CreateCharacter()
         {
-            Console.Clear();
-            Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
-            Console.Write("Character Name: ");
-            tempIGN = Console.ReadLine().Trim();
-            Console.Write("Select Gender [M] [F]: ");
-            ConsoleKeyInfo genderSelect = Console.ReadKey();
-            Console.Write("");
-            account.CharacterCreate(tempIGN, genderSelect.KeyChar);
+            if (account.ShowChar().Length < 3)
+            {
+                Console.Clear();
+                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                Console.Write("Character Name: ");
+                tempIGN = Console.ReadLine().Trim();
+                if (!string.IsNullOrEmpty(tempIGN) || !string.IsNullOrWhiteSpace(tempIGN))
+                {
+                    character = newAccount.IsIGNExists(tempIGN);
+                    if (character == null)
+                    {
+                        Console.Write("Select Gender [M] [F]: ");
+                        ConsoleKeyInfo genderSelect = Console.ReadKey();
+                        if (genderSelect.KeyChar == 'M' || genderSelect.KeyChar == 'm' || genderSelect.KeyChar == 'F' || genderSelect.KeyChar == 'f')
+                        {
+                            account.CharacterCreate(tempIGN, genderSelect.KeyChar);
+                            Console.Clear();
+                            Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                            Console.Write("Character Successfully Created...\nProceed to Selection...\t");
+                            Console.ReadKey();
+                        }
+                        else
+                        {
+                            Console.Write("\n\nYou can't possibly set your gender to Apache Attack Helicopter...");
+                            Console.ReadLine();
+                        }
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                        Console.Write("IGN Already Exists");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nCharacter Name can't be Empty...");
+                    Console.ReadLine();
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                Console.Write("Maximum # of Characters Reached...\nReturning to Main Window...");
+                Console.ReadKey();
+            }
         }
 
         static void SelectCharacter()
         {
             Console.Clear();
             Console.WriteLine("psuedoRAGNAROK.offline\n\n");
-            Console.WriteLine("Character Select");
+            Console.WriteLine("Select Character");
             Console.WriteLine("----------------------------------------");
             if (account.ShowChar().Length != 0)
             {
@@ -139,10 +269,63 @@ namespace psuedoGAME
                     Console.WriteLine($"INT: {identity.intel}\t\tDEX: {identity.dex}\t\tLUK: {identity.luk}");
                     Console.WriteLine("----------------------------------------");
                 }
-                Console.Write("Select Character Name: ");
+                Console.Write("Enter Character Name: ");
                 tempIGN = Console.ReadLine();
-                character = account.GetCharacter(tempIGN);
-                DisplayCharacter();
+                character = newAccount.IsIGNExists(tempIGN);
+                if (character != null)
+                {
+                    character = account.GetCharacter(tempIGN);
+                    DisplayCharacter();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.Write("IGN Doesn't Exists...");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.WriteLine("No Characters to Show...");
+                Console.WriteLine("----------------------------------------");
+                Console.ReadLine();
+            }
+        }
+
+        static void DeleteCharacter()
+        {
+            Console.Clear();
+            Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("Select Character to Delete");
+            Console.WriteLine("----------------------------------------");
+            if (account.ShowChar().Length != 0)
+            {
+                foreach (Character identity in account.ShowChar())
+                {
+                    Console.WriteLine($"IGN: {identity.name}\tJob: {identity.job}\nBase Level: {identity.baselevel}\tJob Level: {identity.baselevel}");
+                    Console.WriteLine($"STR: {identity.str}\t\tAGI: {identity.agi}\t\tVIT: {identity.vit}");
+                    Console.WriteLine($"INT: {identity.intel}\t\tDEX: {identity.dex}\t\tLUK: {identity.luk}");
+                    Console.WriteLine("----------------------------------------");
+                }
+                Console.Write("Enter Character Name: ");
+                tempIGN = Console.ReadLine();
+                character = newAccount.IsIGNExists(tempIGN);
+                if (character != null)
+                {
+                    account.DeleteCharacter(tempIGN);
+                    Console.Clear();
+                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.WriteLine("Character Deleted...\nReturning to Character Menu...");
+                    Console.ReadKey();
+                }
+                else
+                {
+                    Console.Clear();
+                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.Write("IGN Doesn't Exists...");
+                    Console.ReadKey();
+                }
             }
             else
             {
@@ -219,18 +402,67 @@ namespace psuedoGAME
 
         static void DisplayCharacterInventory()
         {
-            Console.Clear();
-            Console.WriteLine("psuedoRAGNAROK.offline\n");
-            Console.WriteLine($"IGN: {character.name}");
-            Console.WriteLine("Quantity\tItem Name");
-            if (character.ShowInventory().Count > 0)
+            bool shouldExitBag = false;
+            while (!shouldExitBag)
             {
+                Console.Clear();
+                Console.WriteLine("psuedoRAGNAROK.offline\n");
+                Console.WriteLine($"IGN: {character.name}");
+                Console.WriteLine("Quantity\tItem Name");
                 foreach (Inventory item in character.ShowInventory())
                 {
                     Console.WriteLine($"{item.quantity}\t\t{item.name}[{item.slot}]");
                 }
-                Console.ReadLine();
+                switch (ShowMenu("[Add Item]", "[Return to Character Screen]"))
+                {
+                    case '1':
+                        AddItem();
+                        break;
+                    case '2':
+                        shouldExitBag = true;
+                        break;
+                }
             }
+        }
+
+        static void AddItem()
+        {
+            Console.Clear();
+            Console.WriteLine("psuedoRAGNAROK.offline\n");
+            Console.WriteLine($"IGN: {character.name}");
+            Console.WriteLine("Item ID\t\tItem Name");
+            foreach (Item item in item.ShowItemList())
+            {
+                Console.WriteLine($"{item.id}\t\t{item.name}");
+            }
+            Console.Write("\nEnter Item ID: ");
+            int.TryParse(Console.ReadLine(), out itemID);
+            Console.Write("Enter Quantity: ");
+            int.TryParse(Console.ReadLine(), out quantity);
+            rItem = item.GenerateItem(itemID, quantity);
+            character.AddInventory(rItem);
+        }
+
+        static void ItemTransfer()
+        {
+            Console.Clear();
+            Console.WriteLine("Kafra Corp - Mailing Service");
+            Console.WriteLine($"Which items you wish to be sent via MAIL [{character.name}]");
+            Console.WriteLine("ItemID\t\tQuantity\t\tItem Name");
+            foreach (Inventory item in character.ShowInventory())
+            {
+                Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+            }
+            Console.Write("\nEnter Item ID: ");
+            int.TryParse(Console.ReadLine(), out itemID);
+            inventoryItem = character.CheckItem(itemID);
+            Console.Write("Enter Quantity: ");
+            int.TryParse(Console.ReadLine(), out quantity);
+            character.DeductItem(itemID, quantity);
+            Console.Write("Mail to [Character Name]: ");
+            transferIGN = Console.ReadLine();
+            transferChar = account.GetCharacter(transferIGN);
+            xAccount.ItemTransfer(transferChar, inventoryItem, quantity);
         }
 
         static void KafraCorp()
@@ -239,20 +471,86 @@ namespace psuedoGAME
             while (!shouldTerminate)
             {
                 Console.Clear();
-                Console.WriteLine("psuedoRAGNAROK.offline\n\n");
-                Console.WriteLine($"Welcome to Kafra Corp [{character.name}]!\nHow can I be of service?..\n\n");
-                switch (ShowMenu("[Mail Item]", "[Access Storage]", "[Good Bye...]"))
+                Console.WriteLine($"\nWelcome to Kafra Corp [{character.name}]!\nHow can I be of service?..\n\n");
+                switch (ShowMenu("[Mail Item]", "[Access Storage]", "[Store Item]", "[Retrive Item]", "[Good Bye...]"))
                 {
                     case '1':
+                        ItemTransfer();
                         break;
                     case '2':
+                        DisplayKafraStorage();
                         break;
                     case '3':
+                        StoreItemKafra();
+                        break;
+                    case '4':
+                        Console.Clear();
+                        Console.WriteLine("Kafra Corp - Storage Service\n");
+                        Console.WriteLine($"Storage of [{character.name}]");
+                        Console.WriteLine("ItemID\t\tQuantity\tItem Name");
+                        if (account.ShowStorage().Count != 0)
+                        {
+                            foreach (var item in account.ShowStorage())
+                            {
+                                Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+                            }
+                            Console.Write("\nEnter Item ID: ");
+                            int.TryParse(Console.ReadLine(), out itemID);
+                            kStoredItem = account.StorageCheck(itemID);
+                            Console.Write("Enter Quantity: ");
+                            int.TryParse(Console.ReadLine(), out quantity);                            
+                            account.StorageDeductItem(itemID, quantity);
+                            account.KafraRemoveItem(character, inventoryItem, quantity);
+                        }
+                        else
+                        {
+                            Console.Write("\n\nKafra Storage Empty");
+                            Console.ReadKey();
+                        }
+                        break;
+                    case '5':
                         shouldTerminate = true;
                         break;
                 }
             }
         }
 
+        static void DisplayKafraStorage()
+        {
+            Console.Clear();
+            Console.WriteLine("Kafra Corp - Storage Service\n");
+            Console.WriteLine($"Storage of [{character.name}]");
+            Console.WriteLine("ItemID\t\tQuantity\tItem Name");
+            if (account.ShowStorage().Count != 0)
+            {
+                foreach (var item in account.ShowStorage())
+                {
+                    Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+                }
+            }
+            else
+            {
+                Console.Write("\n\nKafra Storage Empty");
+            }
+            Console.ReadKey();
+        }
+
+        static void StoreItemKafra()
+        {
+            Console.Clear();
+            Console.WriteLine("Kafra Corp - Storage Service\n");
+            Console.WriteLine("ItemID\tQuantity\t\tItem Name");
+            foreach (var item in character.ShowInventory())
+            {
+                Console.WriteLine($"{item.id}\t{item.quantity}\t\t{item.name}[{item.slot}]");
+            }
+            Console.Write("\nEnter Item ID: ");
+            int.TryParse(Console.ReadLine(), out itemID);
+            inventoryItem = character.CheckItem(itemID);
+            Console.Write("Enter Quantity: ");
+            int.TryParse(Console.ReadLine(), out quantity);
+            character.DeductItem(itemID, quantity);
+            account.KafraStoreItem(inventoryItem, itemID, quantity);
+        }
     }
 }

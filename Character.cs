@@ -18,7 +18,28 @@ namespace psuedoGAME
         public int dex = 1;
         public int luk = 1;
         private Item _item;
-        private List<Inventory> charInventory { get; set; }
+        private List<Inventory> _charInventory = new List<Inventory>();
+        public Character()
+        {
+            _charInventory = new List<Inventory>();
+            BeginnerLoadout(501, 10);
+            BeginnerLoadout(1203, 1);
+            BeginnerLoadout(2305, 1);
+        }
+
+        public void BeginnerLoadout(int id, int quantity)
+        {
+            _item = new Item();
+            Item item = _item.InputItem(id);
+
+            _charInventory.Add(new Inventory
+            {
+                id = item.id,
+                name = item.name,
+                slot = item.slot,
+                quantity = quantity
+            });
+        }
 
         public void AddSTR()
         {
@@ -98,17 +119,79 @@ namespace psuedoGAME
             }
         }
 
-        public Character()
+        public void AddInventory(Item item)
         {
-            charInventory = new List<Inventory>();
-            charInventory.Add(new Inventory{id = 501, name = "Red Potion", slot = 0, quantity = 10});
-            charInventory.Add(new Inventory{id = 1203, name = "Knife", slot = 0, quantity = 1});
-            charInventory.Add(new Inventory{id = 2305, name = "Adventurer's Suit", slot = 0, quantity = 1});
+            if (_charInventory.Exists(x => x.id == item.id))
+            {
+                int index = _charInventory.FindIndex(x => x.id == item.id);
+                if (index != -1)
+                {
+                    _charInventory[index].quantity = _charInventory[index].quantity + item.quantity;
+                }
+            }
+            else
+            {
+                _charInventory.Add(new Inventory
+                {
+                    id = item.id,
+                    name = item.name,
+                    slot = item.slot,
+                    quantity = item.quantity
+                });
+            }
         }
+
+        public void AppendItem(Inventory rItem, int quantity)
+        {
+            if (_charInventory.Exists(x => x.id == rItem.id))
+            {
+                int index = _charInventory.FindIndex(x => x.id == rItem.id);
+                if (index != -1)
+                {
+                    _charInventory[index].quantity = _charInventory[index].quantity + quantity;
+                }
+            }
+            else
+            {
+                _charInventory.Add(new Inventory
+                {
+                    id = rItem.id,
+                    name = rItem.name,
+                    slot = rItem.slot,
+                    quantity = quantity
+                });
+            }
+        }
+
+         public void DeductItem(int itemID, int quantity)
+        {
+            if (_charInventory.Exists(x => x.id == itemID))
+            {
+                int index = _charInventory.FindIndex(x => x.id == itemID);
+                if (index != -1)
+                {
+                    _charInventory[index].quantity -= quantity;
+                }
+            }
+        }
+
+        public Inventory CheckItem(int itemID)
+        {
+            if (_charInventory.Exists(x => x.id == itemID))
+            {
+                int index = _charInventory.FindIndex(x => x.id == itemID);
+                if (index != -1)
+                {
+                    return _charInventory[index];
+                }
+            }
+            return null;
+        }
+
         public List<Inventory> ShowInventory()
         {
             List<Inventory> inventoryListCopy = new List<Inventory>();
-            inventoryListCopy = charInventory;
+            inventoryListCopy = _charInventory;
             return inventoryListCopy;
         }
     }

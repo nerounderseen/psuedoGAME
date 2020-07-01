@@ -7,25 +7,46 @@ namespace psuedoGAME
         public int id;
         public string name;
         public int slot;
-
-        public static List<Item> itemList = new List<Item>()
+        public int quantity;
+        private static List<Item> _itemList = new List<Item>()
         {
-            new Item {id = 501, name = "Red Potion", slot=0},
-            new Item {id = 504, name = "White Potion", slot=0},
+            new Item {id = 501, name = "Red Potion", slot=0,},
             new Item {id = 505, name = "Blue Potion", slot=0},
+            new Item {id = 1203, name = "Knife", slot=0},
+            new Item {id = 2305, name = "Adventurer's Suit", slot=0},
             new Item {id = 5015, name = "Egg Shell", slot=0}
         };
 
-        public Item GetItem(int x)
+        public Item InputItem(int id)
         {
-            foreach (Item item in itemList)
+            foreach (Item item in _itemList)
             {
-                if (item.id == x)
+                if (item.id == id)
                 {
                     return item;
                 }
             }
             return null;
+        }
+
+        public Item GenerateItem(int itemID, int quantity)
+        {
+            foreach (Item item in _itemList)
+            {
+                if (item.id == itemID)
+                {
+                    item.quantity = quantity;
+                    return item;
+                }
+            }
+            return null;
+        }
+
+        public List<Item> ShowItemList()
+        {
+            List<Item> itemListCopy = new List<Item>();
+            itemListCopy = _itemList;
+            return itemListCopy;
         }
     }
 }

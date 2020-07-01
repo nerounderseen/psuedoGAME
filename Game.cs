@@ -4,10 +4,11 @@ namespace psuedoGAME
     class Game
     {
         private List<Account> _accountList { get; set; }
-        private List<Kafra> _accountStorage { get; set; }
+        private Character _character;
+        private Account _account;
+        private Kafra _item;
         public Game()
         {
-            _accountStorage = new List<Kafra>();
             _accountList = new List<Account>();
         }
 
@@ -16,12 +17,54 @@ namespace psuedoGAME
             _accountList.Add(new Account { username = username, password = password, securePIN = pin });
         }
 
+        public Account IsAccountExists(string username)
+        {
+            foreach (Account accnt in _accountList)
+                if (accnt.username == username)
+                {
+                    return accnt;
+                }
+            return null;
+        }
+
         public Account Login(string username, string password)
         {
             foreach (Account accnt in _accountList)
             {
                 if (accnt.username == username && accnt.password == password)
                     return accnt;
+            }
+            return null;
+        }
+
+        public Account PasswordCheck(string password)
+        {
+            foreach (Account accnt in _accountList)
+            {
+                if (accnt.password == password)
+                    return accnt;
+            }
+            return null;
+        }
+
+        public Account SecuredPINCheck(int pin)
+        {
+            foreach (Account accnt in _accountList)
+            {
+                if (accnt.securePIN == pin)
+                    return accnt;
+            }
+            return null;
+        }
+
+        public Account ChangePassword(string username, string password, string nPassword)
+        {
+            foreach (var accnt in _accountList)
+            {
+                if (accnt.username == username && accnt.password == password)
+                {
+                    accnt.password = nPassword;
+                }
             }
             return null;
         }
@@ -37,5 +80,19 @@ namespace psuedoGAME
             }
             return null;
         }
+
+        public Character IsIGNExists(string ign)
+        {
+            foreach (Account accnt in _accountList)
+            {
+                foreach (Character identity in accnt.ShowChar())
+                {
+                    if (identity.name == ign)
+                        return identity;
+                }
+            }
+            return null;
+        }
+
     }
 }
