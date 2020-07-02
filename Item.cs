@@ -14,7 +14,14 @@ namespace psuedoGAME
             new Item {id = 505, name = "Blue Potion", slot=0},
             new Item {id = 1203, name = "Knife", slot=0},
             new Item {id = 2305, name = "Adventurer's Suit", slot=0},
-            new Item {id = 5015, name = "Egg Shell", slot=0}
+            new Item {id = 5015, name = "Egg Shell", slot=0},
+            new Item {id = 1161, name ="Balmung", slot = 0},
+            new Item {id = 2357, name = "Valkyrian Armor", slot = 1},
+            new Item {id = 2524, name = "Valkyrian Manteau", slot = 1},
+            new Item {id = 2421, name ="Valkyrian Shoes", slot = 1},
+            new Item {id = 5171, name ="Valkyrie Helm", slot = 1},
+            new Item {id = 607, name="Yggdrasil Berry", slot = 0},
+            new Item {id = 610, name ="Yggdrasil Leaf", slot= 0}
         };
 
         public Item InputItem(int id)
