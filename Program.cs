@@ -9,7 +9,6 @@ namespace psuedoGAME
         static string transferIGN;
         static string password;
         static string nPassword;
-        static string itemName;
         static int pin;
         static int itemID;
         static int quantity;
@@ -29,7 +28,7 @@ namespace psuedoGAME
             while (!shouldTerminate)
             {
                 Console.Clear();
-                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                 switch (ShowMenu("[Register]", "[Login]", "[Change Password]", "[Forgot Password]", "[Exit]"))
                 {
                     case '1':
@@ -68,7 +67,7 @@ namespace psuedoGAME
         static void RegisterAccnt()
         {
             Console.Clear();
-            Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
             Console.Write("Enter Username: ");
             username = Console.ReadLine();
             account = newAccount.IsAccountExists(username);
@@ -83,7 +82,7 @@ namespace psuedoGAME
                     {
                         newAccount.Registration(username, password, pin);
                         Console.Clear();
-                        Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n\n");
+                        Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
                         Console.Write("Account Successfully Registered...\nProceed to Login...\t");
                         Console.ReadKey();
                     }
@@ -111,7 +110,7 @@ namespace psuedoGAME
         static void Login()
         {
             Console.Clear();
-            Console.WriteLine("LOGIN - psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("LOGIN - psuedoRAGNAROK.offline\n");
             Console.Write("Username: ");
             username = Console.ReadLine();
             Console.Write("Password: ");
@@ -123,7 +122,7 @@ namespace psuedoGAME
                 while (!shouldLogout)
                 {
                     Console.Clear();
-                    Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                    Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                     Console.WriteLine("Select Option");
                     switch (ShowMenu("[Create Character]", "[Select Character]", "[Delete Character]", "[Exit]"))
                     {
@@ -152,7 +151,7 @@ namespace psuedoGAME
         static void ChangPassword()
         {
             Console.Clear();
-            Console.WriteLine("CHANGE PASSWORD - psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("CHANGE PASSWORD - psuedoRAGNAROK.offline\n");
             Console.Write("Username: ");
             username = Console.ReadLine();
             Console.Write("Old Password: ");
@@ -176,7 +175,7 @@ namespace psuedoGAME
         static void ForgotPassword()
         {
             Console.Clear();
-            Console.WriteLine("FORGOT PASSWORD - psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("FORGOT PASSWORD - psuedoRAGNAROK.offline\n");
             Console.Write("Username: ");
             username = Console.ReadLine();
             Console.Write("Secured PIN: ");
@@ -207,7 +206,7 @@ namespace psuedoGAME
             if (account.ShowChar().Length < 3)
             {
                 Console.Clear();
-                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                 Console.Write("Character Name: ");
                 tempIGN = Console.ReadLine().Trim();
                 if (!string.IsNullOrEmpty(tempIGN) || !string.IsNullOrWhiteSpace(tempIGN))
@@ -221,7 +220,7 @@ namespace psuedoGAME
                         {
                             account.CharacterCreate(tempIGN, genderSelect.KeyChar);
                             Console.Clear();
-                            Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                            Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                             Console.Write("Character Successfully Created...\nProceed to Selection...\t");
                             Console.ReadKey();
                         }
@@ -234,7 +233,7 @@ namespace psuedoGAME
                     else
                     {
                         Console.Clear();
-                        Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                        Console.WriteLine("psuedoRAGNAROK.offline\n");
                         Console.Write("IGN Already Exists");
                         Console.ReadKey();
                     }
@@ -248,7 +247,7 @@ namespace psuedoGAME
             else
             {
                 Console.Clear();
-                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n\n");
+                Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                 Console.Write("Maximum # of Characters Reached...\nReturning to Main Window...");
                 Console.ReadKey();
             }
@@ -257,7 +256,7 @@ namespace psuedoGAME
         static void SelectCharacter()
         {
             Console.Clear();
-            Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("psuedoRAGNAROK.offline\n");
             Console.WriteLine("Select Character");
             Console.WriteLine("----------------------------------------");
             if (account.ShowChar().Length != 0)
@@ -274,13 +273,12 @@ namespace psuedoGAME
                 character = newAccount.IsIGNExists(tempIGN);
                 if (character != null)
                 {
-                    character = account.GetCharacter(tempIGN);
                     DisplayCharacter();
                 }
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.Write("IGN Doesn't Exists...");
                     Console.ReadKey();
                 }
@@ -296,7 +294,7 @@ namespace psuedoGAME
         static void DeleteCharacter()
         {
             Console.Clear();
-            Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+            Console.WriteLine("psuedoRAGNAROK.offline\n");
             Console.WriteLine("Select Character to Delete");
             Console.WriteLine("----------------------------------------");
             if (account.ShowChar().Length != 0)
@@ -315,14 +313,14 @@ namespace psuedoGAME
                 {
                     account.DeleteCharacter(tempIGN);
                     Console.Clear();
-                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.WriteLine("Character Deleted...\nReturning to Character Menu...");
                     Console.ReadKey();
                 }
                 else
                 {
                     Console.Clear();
-                    Console.WriteLine("psuedoRAGNAROK.offline\n\n");
+                    Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.Write("IGN Doesn't Exists...");
                     Console.ReadKey();
                 }
@@ -413,6 +411,7 @@ namespace psuedoGAME
                 {
                     Console.WriteLine($"{item.quantity}\t\t{item.name}[{item.slot}]");
                 }
+                Console.WriteLine();
                 switch (ShowMenu("[Add Item]", "[Return to Character Screen]"))
                 {
                     case '1':
@@ -436,33 +435,33 @@ namespace psuedoGAME
                 Console.WriteLine($"{item.id}\t\t{item.name}");
             }
             Console.Write("\nEnter Item ID: ");
-            int.TryParse(Console.ReadLine(), out itemID);
-            Console.Write("Enter Quantity: ");
-            int.TryParse(Console.ReadLine(), out quantity);
-            rItem = item.GenerateItem(itemID, quantity);
-            character.AddInventory(rItem);
-        }
-
-        static void ItemTransfer()
-        {
-            Console.Clear();
-            Console.WriteLine("Kafra Corp - Mailing Service");
-            Console.WriteLine($"Which items you wish to be sent via MAIL [{character.name}]");
-            Console.WriteLine("ItemID\t\tQuantity\t\tItem Name");
-            foreach (Inventory item in character.ShowInventory())
+            if (int.TryParse(Console.ReadLine(), out itemID))
             {
-                Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+                Console.Write("Enter Quantity: ");
+                if (int.TryParse(Console.ReadLine(), out quantity))
+                {
+                    rItem = item.GenerateItem(itemID, quantity);
+                    if (rItem != null)
+                    {
+                        character.AddInventory(rItem);
+                    }
+                    else
+                    {
+                        Console.Write("Item Doesn't Exist...");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nEnter a Valid Item Quantity");
+                    Console.ReadLine();
+                }
             }
-            Console.Write("\nEnter Item ID: ");
-            int.TryParse(Console.ReadLine(), out itemID);
-            inventoryItem = character.CheckItem(itemID);
-            Console.Write("Enter Quantity: ");
-            int.TryParse(Console.ReadLine(), out quantity);
-            character.DeductItem(itemID, quantity);
-            Console.Write("Mail to [Character Name]: ");
-            transferIGN = Console.ReadLine();
-            transferChar = account.GetCharacter(transferIGN);
-            xAccount.ItemTransfer(transferChar, inventoryItem, quantity);
+            else
+            {
+                Console.Write("\nEnter a Valid Item ID");
+                Console.ReadLine();
+            }
         }
 
         static void KafraCorp()
@@ -484,34 +483,74 @@ namespace psuedoGAME
                         StoreItemKafra();
                         break;
                     case '4':
-                        Console.Clear();
-                        Console.WriteLine("Kafra Corp - Storage Service\n");
-                        Console.WriteLine($"Storage of [{character.name}]");
-                        Console.WriteLine("ItemID\t\tQuantity\tItem Name");
-                        if (account.ShowStorage().Count != 0)
-                        {
-                            foreach (var item in account.ShowStorage())
-                            {
-                                Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
-                            }
-                            Console.Write("\nEnter Item ID: ");
-                            int.TryParse(Console.ReadLine(), out itemID);
-                            kStoredItem = account.StorageCheck(itemID);
-                            Console.Write("Enter Quantity: ");
-                            int.TryParse(Console.ReadLine(), out quantity);                            
-                            account.StorageDeductItem(itemID, quantity);
-                            account.KafraRemoveItem(character, inventoryItem, quantity);
-                        }
-                        else
-                        {
-                            Console.Write("\n\nKafra Storage Empty");
-                            Console.ReadKey();
-                        }
+                        RetrieveItemKafra();
                         break;
                     case '5':
                         shouldTerminate = true;
                         break;
                 }
+            }
+        }
+
+        static void ItemTransfer()
+        {
+            Console.Clear();
+            Console.WriteLine("Kafra Corp - Mailing Service\n");
+            Console.WriteLine($"Which items you wish to be sent via MAIL [{character.name}]");
+            Console.WriteLine("ItemID\t\tQuantity\t\tItem Name");
+            foreach (Inventory item in character.ShowInventory())
+            {
+                Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+            }
+            Console.Write("\nEnter Item ID: ");
+            if (int.TryParse(Console.ReadLine(), out itemID))
+            {
+                inventoryItem = character.CheckItem(itemID);
+                if (inventoryItem != null)
+                {
+                    Console.Write("Enter Quantity: ");
+                    if (int.TryParse(Console.ReadLine(), out quantity))
+                    {
+                        if (inventoryItem.quantity >= quantity)
+                        {
+                            Console.Write("Mail to [Character Name]: ");
+                            transferIGN = Console.ReadLine();
+                            transferChar = newAccount.IsIGNExists(transferIGN);
+                            if (transferChar != null)
+                            {
+                                character.DeductItem(itemID, quantity);
+                                xAccount.ItemTransfer(transferChar, inventoryItem, quantity);
+                                Console.Write($"\n[{transferChar.name}] has been sent [{quantity}] [{inventoryItem.name}]...");
+                                Console.ReadKey();
+                            }
+                            else
+                            {
+                                Console.Write("Receiving Character doesn't Exists");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.Write("\nItem quantity exceeds number of items in Inventory");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("\nEnter a Valid Item Quantity");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nItem not found in Inventory");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.Write("\nEnter a Valid Item ID");
+                Console.ReadKey();
             }
         }
 
@@ -540,17 +579,105 @@ namespace psuedoGAME
             Console.Clear();
             Console.WriteLine("Kafra Corp - Storage Service\n");
             Console.WriteLine("ItemID\tQuantity\t\tItem Name");
-            foreach (var item in character.ShowInventory())
+            foreach (var itemInv in character.ShowInventory())
             {
-                Console.WriteLine($"{item.id}\t{item.quantity}\t\t{item.name}[{item.slot}]");
+                Console.WriteLine($"{itemInv.id}\t{itemInv.quantity}\t\t{itemInv.name}[{itemInv.slot}]");
             }
             Console.Write("\nEnter Item ID: ");
-            int.TryParse(Console.ReadLine(), out itemID);
-            inventoryItem = character.CheckItem(itemID);
-            Console.Write("Enter Quantity: ");
-            int.TryParse(Console.ReadLine(), out quantity);
-            character.DeductItem(itemID, quantity);
-            account.KafraStoreItem(inventoryItem, itemID, quantity);
+            if (int.TryParse(Console.ReadLine(), out itemID))
+            {
+                inventoryItem = character.CheckItem(itemID);
+                if (inventoryItem != null)
+                {
+                    Console.Write("Enter Quantity: ");
+                    if (int.TryParse(Console.ReadLine(), out quantity))
+                    {
+                        if (quantity <= inventoryItem.quantity)
+                        {
+                            if (inventoryItem != null)
+                            {
+                                character.DeductItem(itemID, quantity);
+                                account.KafraStoreItem(inventoryItem, itemID, quantity);
+                            }
+                            else
+                            {
+                                Console.Write("\nEnter a Valid Item ID");
+                                Console.ReadKey();
+                            }
+                        }
+                        else
+                        {
+                            Console.Write("\nItem Quantity exceeds number of items in Inventory");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("\nEnter a Valid Item Quantity");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nItem not found in Inventory");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.Write("\nEnter a Valid Item ID");
+                Console.ReadKey();
+            }
+        }
+
+        static void RetrieveItemKafra()
+        {
+            Console.Clear();
+            Console.WriteLine("Kafra Corp - Storage Service\n");
+            Console.WriteLine($"Storage of [{character.name}]");
+            Console.WriteLine("ItemID\t\tQuantity\tItem Name");
+            if (account.ShowStorage().Count != 0)
+            {
+                foreach (var item in account.ShowStorage())
+                {
+                    Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
+                }
+                Console.Write("\nEnter Item ID: ");
+                if (int.TryParse(Console.ReadLine(), out itemID))
+                {
+                    kStoredItem = account.StorageCheck(itemID);
+                    if (kStoredItem != null)
+                    {
+                        Console.Write("Enter Quantity: ");
+                        int.TryParse(Console.ReadLine(), out quantity);
+                        if (item.quantity <= quantity)
+                        {
+                            account.StorageDeductItem(itemID, quantity);
+                            account.KafraRemoveItem(character, inventoryItem, quantity);
+                        }
+                        else
+                        {
+                            Console.Write("\nEnter a Valid Item Quantity");
+                            Console.ReadKey();
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("\nItem not found in Kafra Storagedot");
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nEnter a Valid Item ID");
+                    Console.ReadKey();
+                }
+            }
+            else
+            {
+                Console.Write("\n\nKafra Storage Empty");
+                Console.ReadKey();
+            }
         }
     }
 }

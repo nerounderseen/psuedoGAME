@@ -4,9 +4,6 @@ namespace psuedoGAME
     class Game
     {
         private List<Account> _accountList { get; set; }
-        private Character _character;
-        private Account _account;
-        private Kafra _item;
         public Game()
         {
             _accountList = new List<Account>();

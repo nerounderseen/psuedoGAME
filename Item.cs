@@ -31,12 +31,13 @@ namespace psuedoGAME
 
         public Item GenerateItem(int itemID, int quantity)
         {
-            foreach (Item item in _itemList)
+            if (_itemList.Exists(x => x.id == itemID))
             {
-                if (item.id == itemID)
+                int index = _itemList.FindIndex(x => x.id == itemID);
+                if (index != -1)
                 {
-                    item.quantity = quantity;
-                    return item;
+                    _itemList[index].quantity = quantity;
+                    return _itemList[index];
                 }
             }
             return null;

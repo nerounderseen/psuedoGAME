@@ -67,16 +67,6 @@ namespace psuedoGAME
             }
         }
 
-        public Character GetCharacter(string ign)
-        {
-            foreach (Character character in _charNew)
-            {
-                if (character.name == ign)
-                    return character;
-            }
-            return null;
-        }
-
         public void ItemTransfer(Character targetAccount, Inventory item, int quantity)
         {
             var rcvrChar = targetAccount;
