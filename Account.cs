@@ -105,7 +105,7 @@ namespace psuedoGAME
             }
         }
 
-        public void KafraRemoveItem(Character character, Inventory item, int quantity)
+        public void KafraRetrieveItem(Character character, Inventory item, int quantity)
         {
             var rcvrChar = character;
             rcvrChar.AppendItem(item, quantity);
@@ -132,6 +132,10 @@ namespace psuedoGAME
                 if (index != -1)
                 {
                     _accountStorage[index].quantity -= quantity;
+                    if (_accountStorage[index].quantity == 0)
+                    {
+                        _accountStorage.Remove(_accountStorage[index]);
+                    }
                 }
             }
             return null;

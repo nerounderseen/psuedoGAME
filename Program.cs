@@ -598,6 +598,8 @@ namespace psuedoGAME
                             {
                                 character.DeductItem(itemID, quantity);
                                 account.KafraStoreItem(inventoryItem, itemID, quantity);
+                                Console.Write($"Stored {quantity} {inventoryItem.name}");
+                                Console.ReadKey();
                             }
                             else
                             {
@@ -653,7 +655,9 @@ namespace psuedoGAME
                         if (item.quantity <= quantity)
                         {
                             account.StorageDeductItem(itemID, quantity);
-                            account.KafraRemoveItem(character, inventoryItem, quantity);
+                            account.KafraRetrieveItem(character, inventoryItem, quantity);
+                            Console.Write($"Retrieved {quantity} {inventoryItem.name}");
+                            Console.ReadKey();
                         }
                         else
                         {

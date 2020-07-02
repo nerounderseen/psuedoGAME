@@ -171,6 +171,10 @@ namespace psuedoGAME
                 if (index != -1)
                 {
                     _charInventory[index].quantity -= quantity;
+                    if (_charInventory[index].quantity == 0)
+                    {
+                        _charInventory.Remove(_charInventory[index]);
+                    }
                 }
             }
         }
