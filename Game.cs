@@ -54,7 +54,7 @@ namespace psuedoGAME
             return null;
         }
 
-        public Account ChangePassword(string username, string password, string nPassword)
+        public void ChangePassword(string username, string password, string nPassword)
         {
             foreach (var accnt in _accountList)
             {
@@ -63,7 +63,6 @@ namespace psuedoGAME
                     accnt.password = nPassword;
                 }
             }
-            return null;
         }
 
         public Account ForgotPassword(string username, int pin)

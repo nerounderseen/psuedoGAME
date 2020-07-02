@@ -21,6 +21,7 @@ namespace psuedoGAME
         static Inventory inventoryItem;
         static Item item = new Item();
         static Item rItem;
+        static Job job = new Job();
 
         static void Main(string[] args)
         {
@@ -38,7 +39,7 @@ namespace psuedoGAME
                         Login();
                         break;
                     case '3':
-                        ChangPassword();
+                        ChangePassword();
                         break;
                     case '4':
                         ForgotPassword();
@@ -78,7 +79,7 @@ namespace psuedoGAME
                 Console.Write("Enter Secure PIN: ");
                 if (int.TryParse(Console.ReadLine(), out pin))
                 {
-                    if ((!string.IsNullOrEmpty(username) || !string.IsNullOrWhiteSpace(username)) && (!string.IsNullOrWhiteSpace(username) || !string.IsNullOrWhiteSpace(username)))
+                    if ((!string.IsNullOrEmpty(username) || !string.IsNullOrWhiteSpace(username)) && (!string.IsNullOrEmpty(password) || !string.IsNullOrWhiteSpace(password)))
                     {
                         newAccount.Registration(username, password, pin);
                         Console.Clear();
@@ -148,7 +149,7 @@ namespace psuedoGAME
             }
         }
 
-        static void ChangPassword()
+        static void ChangePassword()
         {
             Console.Clear();
             Console.WriteLine("CHANGE PASSWORD - psuedoRAGNAROK.offline\n");
@@ -161,7 +162,7 @@ namespace psuedoGAME
             {
                 Console.Write("New Password: ");
                 nPassword = Console.ReadLine();
-                account = newAccount.ChangePassword(username, password, nPassword);
+                newAccount.ChangePassword(username, password, nPassword);
                 Console.Write("\n\nPassword Changed Successfully...");
                 Console.ReadKey();
             }
@@ -343,18 +344,27 @@ namespace psuedoGAME
                 Console.WriteLine($"IGN: {character.name}\tJob: {character.job}\tBase LVL: {character.baselevel}\tJob LVL: {character.joblevel}");
                 Console.WriteLine($"\t\tSTR: {character.str}\t\tAGI: {character.agi}\t\tVIT: {character.vit}");
                 Console.WriteLine($"\t\tINT: {character.intel}\t\tDEX: {character.dex}\t\tLUK: {character.luk}\n\n");
-                switch (ShowMenu("[Add Stats]", "[Access Inventory]", "[Kafra]", "[Change Character]"))
+                switch (ShowMenu("[+Base LVL]", "[+Job LVL]", "[Add Stats]", "[Access Inventory]", "[Kafra]", "[Change Job]", "[Change Character]"))
                 {
                     case '1':
-                        AddStats();
+                        character.IncBaseLVL();
                         break;
                     case '2':
-                        DisplayCharacterInventory();
+                        character.IncJobLVL();
                         break;
                     case '3':
-                        KafraCorp();
+                        AddStats();
                         break;
                     case '4':
+                        DisplayCharacterInventory();
+                        break;
+                    case '5':
+                        KafraCorp();
+                        break;
+                    case '6':
+                        ChangeJob();
+                        break;
+                    case '7':
                         shouldChangeChar = true;
                         break;
                 }
@@ -368,9 +378,10 @@ namespace psuedoGAME
             {
                 Console.Clear();
                 Console.WriteLine("psuedoRAGNAROK.offline\n");
-                Console.WriteLine($"IGN: {character.name}\t\tStat Points: {character.freePoints}");
-                Console.WriteLine($"\tSTR: {character.str}\t\tAGI: {character.agi}\t\tVIT: {character.vit}");
-                Console.WriteLine($"\tINT: {character.intel}\t\tDEX: {character.dex}\t\tLUK: {character.luk}\n");
+                Console.WriteLine($"IGN: {character.name}");
+                Console.WriteLine($"Base Level: {character.baselevel}\tJob Level: {character.joblevel}\t\tStat Points: {character.freePoints}");
+                Console.WriteLine($"\t\tSTR: {character.str}\t\tAGI: {character.agi}\t\tVIT: {character.vit}");
+                Console.WriteLine($"\t\tINT: {character.intel}\t\tDEX: {character.dex}\t\tLUK: {character.luk}\n");
                 switch (ShowMenu("[+STR]", "[+AGI]", "[+VIT]", "[+INT]", "[+DEX]", "[+LUK]", "[Character Page]"))
                 {
                     case '1':
@@ -391,7 +402,7 @@ namespace psuedoGAME
                     case '6':
                         character.AddLUK();
                         break;
-                    case '7':
+                    case '8':
                         shouldReturn = true;
                         break;
                 }
@@ -444,6 +455,8 @@ namespace psuedoGAME
                     if (rItem != null)
                     {
                         character.AddInventory(rItem);
+                        Console.Write($"Added {quantity} {rItem.name} to Inventory");
+                        Console.ReadKey();
                     }
                     else
                     {
@@ -470,7 +483,7 @@ namespace psuedoGAME
             while (!shouldTerminate)
             {
                 Console.Clear();
-                Console.WriteLine($"\nWelcome to Kafra Corp [{character.name}]!\nHow can I be of service?..\n\n");
+                Console.WriteLine($"Welcome to Kafra Corp [{character.name}]!\nHow can I be of service?..\n\n");
                 switch (ShowMenu("[Mail Item]", "[Access Storage]", "[Store Item]", "[Retrive Item]", "[Good Bye...]"))
                 {
                     case '1':
@@ -489,6 +502,55 @@ namespace psuedoGAME
                         shouldTerminate = true;
                         break;
                 }
+            }
+        }
+
+        static void ChangeJob()
+        {
+            if (character.job == "Novice" && character.joblevel == 10)
+            {
+                Console.Clear();
+                Console.WriteLine($"Select a First Job for {character.name}\n");
+                Console.WriteLine($"Job Name\t\tJob Description");
+                foreach (Job job in job.ShowFirstJobList())
+                {
+                    Console.WriteLine($"{job.name}\t\t{job.descript}");
+                }
+                Console.Write("\n\nSelect New Job: ");
+                if (!int.TryParse(Console.ReadLine().ToLower(), out var x))
+                {
+                    string JobChange = x.ToString();
+                    job = character.ChangeJob(character, JobChange);
+                    if (job != null)
+                    {
+                        Console.Write($"UPDATE:[{character.name}] Job is now [{job.name}]...");
+                        Console.ReadKey();
+                    }
+                    else
+                    {
+                        Console.Write("\nInvalid Job...");
+                        Console.ReadLine();
+                    }
+                }
+                else
+                {
+                    Console.Write("\nInvalid Job...");
+                    Console.ReadLine();
+                }
+            }
+            else if (character.job != "Novice" && character.joblevel <= 50)
+            {
+                Console.Clear();
+                Console.WriteLine("psuedoRAGNAROK.offline\n");
+                Console.Write("Job Level 51 is needed to Change First Job...");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("psuedoRAGNAROK.offline\n");
+                Console.Write("Job Level 10 is needed to Change First Job...");
+                Console.ReadKey();
             }
         }
 
