@@ -402,7 +402,7 @@ namespace psuedoGAME
                     case '6':
                         character.AddLUK();
                         break;
-                    case '8':
+                    case '7':
                         shouldReturn = true;
                         break;
                 }
@@ -729,7 +729,7 @@ namespace psuedoGAME
                     }
                     else
                     {
-                        Console.Write("\nItem not found in Kafra Storagedot");
+                        Console.Write("\nItem not found in Kafra Storage");
                         Console.ReadKey();
                     }
                 }
