@@ -34,11 +34,11 @@ namespace psuedoGAME
             return null;
         }
 
-        public Account PasswordCheck(string password)
+        public Account PasswordCheck(string username, string password)
         {
             foreach (Account accnt in _accountList)
             {
-                if (accnt.password == password)
+                if (accnt != null && accnt.username == username && accnt.password == password)
                     return accnt;
             }
             return null;

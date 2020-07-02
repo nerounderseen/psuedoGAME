@@ -85,18 +85,15 @@ namespace psuedoGAME
                         Console.Clear();
                         Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
                         Console.Write("Account Successfully Registered...\nProceed to Login...\t");
-                        Console.ReadKey();
                     }
                     else
                     {
                         Console.Write("\nUsername/Password can't be Empty...");
-                        Console.ReadLine();
                     }
                 }
                 else
                 {
                     Console.Write("\nSecured Pin is Invalid...");
-                    Console.ReadLine();
                 }
             }
             else
@@ -104,8 +101,8 @@ namespace psuedoGAME
                 Console.Clear();
                 Console.WriteLine("REGISTER - psuedoRAGNAROK.offline\n");
                 Console.Write("Username Already Exists");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         static void Login()
@@ -145,8 +142,8 @@ namespace psuedoGAME
             else
             {
                 Console.Write("\nIncorrect Username/Password...");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         static void ChangePassword()
@@ -157,20 +154,19 @@ namespace psuedoGAME
             username = Console.ReadLine();
             Console.Write("Old Password: ");
             password = Console.ReadLine();
-            newAccount.PasswordCheck(password);
-            if (newAccount != null)
+            xAccount = newAccount.PasswordCheck(username, password);
+            Console.Write("New Password: ");
+            nPassword = Console.ReadLine();
+            if (xAccount != null)
             {
-                Console.Write("New Password: ");
-                nPassword = Console.ReadLine();
                 newAccount.ChangePassword(username, password, nPassword);
                 Console.Write("\n\nPassword Changed Successfully...");
-                Console.ReadKey();
             }
             else
             {
-                Console.Write("\nEntered Password is Incorrect...\nReturning to Main Screen...");
-                Console.ReadKey();
+                Console.Write("\nInvalid User Credentials...\nReturning to Main Window...");
             }
+            Console.ReadKey();
         }
 
         static void ForgotPassword()
@@ -187,19 +183,17 @@ namespace psuedoGAME
                 {
                     account = newAccount.ForgotPassword(username, pin);
                     Console.Write($"\nAccount Username: {account.username}\nAccount Password: {account.password}\t");
-                    Console.ReadLine();
                 }
                 else
                 {
                     Console.Write("\nAccount/Secured Pin is Invalid...");
-                    Console.ReadLine();
                 }
             }
             else
             {
                 Console.Write("\nSecured PIN is Invalid...");
-                Console.ReadLine();
             }
+            Console.ReadKey();
         }
 
         static void CreateCharacter()
@@ -223,12 +217,10 @@ namespace psuedoGAME
                             Console.Clear();
                             Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                             Console.Write("Character Successfully Created...\nProceed to Selection...\t");
-                            Console.ReadKey();
                         }
                         else
                         {
                             Console.Write("\n\nYou can't possibly set your gender to Apache Attack Helicopter...");
-                            Console.ReadLine();
                         }
                     }
                     else
@@ -236,13 +228,11 @@ namespace psuedoGAME
                         Console.Clear();
                         Console.WriteLine("psuedoRAGNAROK.offline\n");
                         Console.Write("IGN Already Exists");
-                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.Write("\nCharacter Name can't be Empty...");
-                    Console.ReadLine();
                 }
             }
             else
@@ -250,8 +240,8 @@ namespace psuedoGAME
                 Console.Clear();
                 Console.WriteLine("Welcome to psuedoRAGNAROK.offline\n");
                 Console.Write("Maximum # of Characters Reached...\nReturning to Main Window...");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         static void SelectCharacter()
@@ -281,15 +271,14 @@ namespace psuedoGAME
                     Console.Clear();
                     Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.Write("IGN Doesn't Exists...");
-                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine("No Characters to Show...");
                 Console.WriteLine("----------------------------------------");
-                Console.ReadLine();
             }
+            Console.ReadLine();
         }
 
         static void DeleteCharacter()
@@ -316,22 +305,20 @@ namespace psuedoGAME
                     Console.Clear();
                     Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.WriteLine("Character Deleted...\nReturning to Character Menu...");
-                    Console.ReadKey();
                 }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("psuedoRAGNAROK.offline\n");
                     Console.Write("IGN Doesn't Exists...");
-                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.WriteLine("No Characters to Show...");
                 Console.WriteLine("----------------------------------------");
-                Console.ReadLine();
             }
+            Console.ReadKey();
         }
 
         static void DisplayCharacter()
@@ -456,25 +443,22 @@ namespace psuedoGAME
                     {
                         character.AddInventory(rItem);
                         Console.Write($"Added {quantity} {rItem.name} to Inventory");
-                        Console.ReadKey();
                     }
                     else
                     {
                         Console.Write("Item Doesn't Exist...");
-                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.Write("\nEnter a Valid Item Quantity");
-                    Console.ReadLine();
                 }
             }
             else
             {
                 Console.Write("\nEnter a Valid Item ID");
-                Console.ReadLine();
             }
+            Console.ReadKey();
         }
 
         static void KafraCorp()
@@ -490,15 +474,12 @@ namespace psuedoGAME
                         ItemTransfer();
                         break;
                     case '2':
-                        DisplayKafraStorage();
-                        break;
-                    case '3':
                         StoreItemKafra();
                         break;
-                    case '4':
+                    case '3':
                         RetrieveItemKafra();
                         break;
-                    case '5':
+                    case '4':
                         shouldTerminate = true;
                         break;
                 }
@@ -524,18 +505,15 @@ namespace psuedoGAME
                     if (job != null)
                     {
                         Console.Write($"UPDATE:[{character.name}] Job is now [{job.name}]...");
-                        Console.ReadKey();
                     }
                     else
                     {
                         Console.Write("\nInvalid Job...");
-                        Console.ReadLine();
                     }
                 }
                 else
                 {
                     Console.Write("\nInvalid Job...");
-                    Console.ReadLine();
                 }
             }
             else if (character.job != "Novice" && character.joblevel <= 50)
@@ -543,15 +521,14 @@ namespace psuedoGAME
                 Console.Clear();
                 Console.WriteLine("psuedoRAGNAROK.offline\n");
                 Console.Write("Job Level 51 is needed to Change First Job...");
-                Console.ReadKey();
             }
             else
             {
                 Console.Clear();
                 Console.WriteLine("psuedoRAGNAROK.offline\n");
                 Console.Write("Job Level 10 is needed to Change First Job...");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
 
         static void ItemTransfer()
@@ -583,55 +560,30 @@ namespace psuedoGAME
                                 character.DeductItem(itemID, quantity);
                                 xAccount.ItemTransfer(transferChar, inventoryItem, quantity);
                                 Console.Write($"\n[{transferChar.name}] has been sent [{quantity}] [{inventoryItem.name}]...");
-                                Console.ReadKey();
                             }
                             else
                             {
                                 Console.Write("Receiving Character doesn't Exists");
-                                Console.ReadKey();
                             }
                         }
                         else
                         {
                             Console.Write("\nItem quantity exceeds number of items in Inventory");
-                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.Write("\nEnter a Valid Item Quantity");
-                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.Write("\nItem not found in Inventory");
-                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.Write("\nEnter a Valid Item ID");
-                Console.ReadKey();
-            }
-        }
-
-        static void DisplayKafraStorage()
-        {
-            Console.Clear();
-            Console.WriteLine("Kafra Corp - Storage Service\n");
-            Console.WriteLine($"Storage of [{character.name}]");
-            Console.WriteLine("ItemID\t\tQuantity\tItem Name");
-            if (account.ShowStorage().Count != 0)
-            {
-                foreach (var item in account.ShowStorage())
-                {
-                    Console.WriteLine($"{item.id}\t\t{item.quantity}\t\t{item.name}[{item.slot}]");
-                }
-            }
-            else
-            {
-                Console.Write("\n\nKafra Storage Empty");
             }
             Console.ReadKey();
         }
@@ -719,31 +671,27 @@ namespace psuedoGAME
                             account.StorageDeductItem(itemID, quantity);
                             account.KafraRetrieveItem(character, inventoryItem, quantity);
                             Console.Write($"Retrieved {quantity} {inventoryItem.name}");
-                            Console.ReadKey();
                         }
                         else
                         {
                             Console.Write("\nEnter a Valid Item Quantity");
-                            Console.ReadKey();
                         }
                     }
                     else
                     {
                         Console.Write("\nItem not found in Kafra Storage");
-                        Console.ReadKey();
                     }
                 }
                 else
                 {
                     Console.Write("\nEnter a Valid Item ID");
-                    Console.ReadKey();
                 }
             }
             else
             {
                 Console.Write("\n\nKafra Storage Empty");
-                Console.ReadKey();
             }
+            Console.ReadKey();
         }
     }
 }
