@@ -46,7 +46,7 @@ namespace psuedoGAME
 
         public void AddAGI()
         {
-            if (agi < 99 && freePoints > 11)
+            if (agi < 99 && freePoints > 0)
             {
                 _tempStat = ((agi - 1) / 10) + 2;
                 freePoints = freePoints - _tempStat;
@@ -60,7 +60,7 @@ namespace psuedoGAME
 
         public void AddVIT()
         {
-            if (vit < 99 && freePoints > 11)
+            if (vit < 99 && freePoints > 0)
             {
                 _tempStat = ((vit - 1) / 10) + 2;
                 freePoints = freePoints - _tempStat;
@@ -74,7 +74,7 @@ namespace psuedoGAME
 
         public void AddINT()
         {
-            if (intel < 99 && freePoints > 11)
+            if (intel < 99 && freePoints > 0)
             {
                 _tempStat = ((intel - 1) / 10) + 2;
                 freePoints = freePoints - _tempStat;
@@ -88,7 +88,7 @@ namespace psuedoGAME
 
         public void AddDEX()
         {
-            if (dex < 99 && freePoints > 11)
+            if (dex < 99 && freePoints > 0)
             {
                 _tempStat = ((dex - 1) / 10) + 2;
                 freePoints = freePoints - _tempStat;
@@ -102,7 +102,7 @@ namespace psuedoGAME
 
         public void AddLUK()
         {
-            if (luk < 99 && freePoints > 11)
+            if (luk < 99 && freePoints > 0)
             {
                 _tempStat = ((luk - 1) / 10) + 2;
                 freePoints = freePoints - _tempStat;

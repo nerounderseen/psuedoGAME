@@ -468,7 +468,7 @@ namespace psuedoGAME
             {
                 Console.Clear();
                 Console.WriteLine($"Welcome to Kafra Corp [{character.name}]!\nHow can I be of service?..\n\n");
-                switch (ShowMenu("[Mail Item]", "[Access Storage]", "[Store Item]", "[Retrive Item]", "[Good Bye...]"))
+                switch (ShowMenu("[Mail Item]", "[Store Item]", "[Retrive Item]", "[Good Bye...]"))
                 {
                     case '1':
                         ItemTransfer();
